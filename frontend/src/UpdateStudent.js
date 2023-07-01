@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function CreateStudent() {
+function UpdateStudent() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const {id} = useParams();
     const Navigate = useNavigate();
 
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post('http://localhost:8081/create', {name, email})
+        axios.put('http://localhost:8081/update/'+id, {name, email})
         .then(res => {
             console.log(res);
             Navigate('/');
@@ -21,7 +22,7 @@ function CreateStudent() {
         <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
             <div className='w-50 bg-white rounded p-3'>
                 <form onSubmit={handleSubmit}>
-                    <h2>Add Student</h2>
+                    <h2>Update Student</h2>
                     <div className='mb-2'>
                         <label htmlFor=''>Name</label>
                         <input type='text' placeholder='Enter Name' className='form-control'
@@ -39,4 +40,4 @@ function CreateStudent() {
     )
 }
 
-export default CreateStudent
+export default UpdateStudent
